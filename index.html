@@ -29,12 +29,29 @@
                 <li>Номер: +7(ххх)ххх-хх-хх</li>
                 <li>Почта: example@example.com</li>
             </ul>
-            <div>
-                <p>Моя корзина</p>
+            <!-- В ХЭДЕРЕ -->
+            <div class="cart-wrapper">
+                
+                <!-- Кнопка корзины -->
                 <button class="cart-btn" id="cart-btn">
                     <i class="fas fa-shopping-cart"></i>
+                    <!-- ВАЖНО: id="cart-count" — сюда JS будет писать цифру -->
                     <span class="cart-count" id="cart-count">0</span>
                 </button>
+
+                <!-- Выпадающее окно -->
+                <div class="cart-window" id="cart-window">
+                    <div class="cart-header">
+                        <h3>Корзина</h3>
+                        <!-- ВАЖНО: класс cart-total — сюда JS напишет сумму -->
+                        <span class="cart-total">0 руб.</span>
+                    </div>
+
+                    <!-- ВАЖНО: класс cart-items — сюда JS добавит товары -->
+                    <div class="cart-items"></div>
+                    
+                    <button class="checkout-btn">Оформить</button>
+                </div>
             </div>
         </header>
         <main>
@@ -50,7 +67,7 @@
                                 <h3>Yeezy Boosts</h3>
                                 <p>Размер - 41</p>
                                 <p>Цена - 23 000р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('ye-new')">Добавить в корзину.</button>
                             </div>
                         </article>
 
@@ -62,7 +79,7 @@
                                 <h3>Nike Air Max 90</h3>
                                 <p>Размер - 42</p>
                                 <p>Цена - 13 990р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('am-new')">Добавить в корзину.</button>
                             </div>
                         </article>
 
@@ -74,7 +91,7 @@
                                 <h3>Nike Air Jordan 3</h3>
                                 <p>Размер - 40</p>
                                 <p>Цена - 11 100р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('aj-new')">Добавить в корзину.</button>
                             </div>
                         </article>
                     </div>
@@ -93,7 +110,7 @@
                                 <h3>Yeezy Boosts</h3>
                                 <p>Размер - 41</p>
                                 <p>Цена - 23 000р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('ye-male')">Добавить в корзину.</button>
                             </div>
                         </article>
 
@@ -105,7 +122,7 @@
                                 <h3>Nike Air Max 90</h3>
                                 <p>Размер - 42</p>
                                 <p>Цена - 13 990р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('am-male')">Добавить в корзину.</button>
                             </div>
                         </article>
 
@@ -117,7 +134,7 @@
                                 <h3>Nike Air Jordan 3</h3>
                                 <p>Размер - 40</p>
                                 <p>Цена - 11 100р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('aj-male')">Добавить в корзину.</button>
                             </div>
                         </article>
                     </div>
@@ -136,7 +153,7 @@
                                 <h3>Yeezy Boosts</h3>
                                 <p>Размер - 41</p>
                                 <p>Цена - 23 000р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('ye-female')">Добавить в корзину.</button>
                             </div>
                         </article>
 
@@ -148,7 +165,7 @@
                                 <h3>Nike Air Max 90</h3>
                                 <p>Размер - 42</p>
                                 <p>Цена - 13 990р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('am-female')">Добавить в корзину.</button>
                             </div>
                         </article>
 
@@ -160,7 +177,7 @@
                                 <h3>Nike Air Jordan 3</h3>
                                 <p>Размер - 40</p>
                                 <p>Цена - 11 100р.</p>
-                                <button class="add-to-cart">Добавить в корзину.</button>
+                                <button class="add-to-cart" onclick="addToCart('aj-female')">Добавить в корзину.</button>
                             </div>
                         </article>
                     </div>
