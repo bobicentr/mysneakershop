@@ -1,193 +1,92 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="main.css">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <title>Sneakershop</title>
-    </head>
-    <body>
-        <header>
-            <h1>
-                <a href="/">SneakerShop</a>
-            </h1>
-            <ul class="nav-links">
-                <li><a href="#new">Новинки</a></li>
-                <li><a href="#male">Мужская обувь</a></li>
-                <li><a href="#female">Женская обувь</a></li>
-            </ul>
-            <form action="#" role="search" class="search-form" onsubmit="return false;"> <!-- onsubmit отключает перезагрузку -->
-                <input type="search" id="site-search" placeholder="Найти модель..." autocomplete="off">
-                <button type="button"><i class="fas fa-search"></i></button>
-                
-                <!-- ВОТ ЭТОТ БЛОК БУДЕТ ВЫПАДАТЬ С РЕЗУЛЬТАТАМИ -->
-                <div id="search-results" class="search-results"></div>
-            </form>
-            <ul>
-                <p>Контакты</p>
-                <li>Номер: +7(ххх)ххх-хх-хх</li>
-                <li>Почта: example@example.com</li>
-            </ul>
-            <!-- В ХЭДЕРЕ -->
-            <div class="cart-wrapper">
-                
-                <!-- Кнопка корзины -->
-                <button class="cart-btn" id="cart-btn">
-                    <i class="fas fa-shopping-cart"></i>
-                    <!-- ВАЖНО: id="cart-count" — сюда JS будет писать цифру -->
-                    <span class="cart-count" id="cart-count">0</span>
-                </button>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SneakerShop</title>
+    
+    <!-- 1. Стильный шрифт Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- 2. Иконки FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- 3. Твой CSS -->
+    <link rel="stylesheet" href="main.css">
 
-                <!-- Выпадающее окно -->
-                <div class="cart-window" id="cart-window">
-                    <div class="cart-header">
-                        <h3>Корзина</h3>
-                        <!-- ВАЖНО: класс cart-total — сюда JS напишет сумму -->
-                        <span class="cart-total">0 руб.</span>
-                    </div>
+    <!-- 4. SUPABASE (Бэкенд) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
 
-                    <!-- ВАЖНО: класс cart-items — сюда JS добавит товары -->
-                    <div class="cart-items"></div>
-                    
-                    <button class="checkout-btn">Оформить</button>
+    <header>
+        <h1><a href="/">SneakerShop</a></h1>
+        
+        <ul class="nav-links">
+            <li><a href="#new">Новинки</a></li>
+            <li><a href="#male">Мужские</a></li>
+            <li><a href="#female">Женские</a></li>
+        </ul>
+
+        <!-- Поиск -->
+        <form action="#" role="search" class="search-form" onsubmit="return false;">
+            <input type="search" id="site-search" placeholder="Найти модель..." autocomplete="off">
+            <button type="button"><i class="fas fa-search"></i></button>
+            <div id="search-results" class="search-results"></div>
+        </form>
+
+        <!-- Корзина -->
+        <div class="cart-wrapper">
+            <button class="cart-btn" id="cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cart-count">0</span>
+            </button>
+
+            <div class="cart-window" id="cart-window">
+                <div class="cart-header">
+                    <h3>Корзина</h3>
+                    <span class="cart-total">0 руб.</span>
                 </div>
+                <div class="cart-items"></div>
+                <button class="checkout-btn">Оформить</button>
             </div>
-        </header>
-        <main>
-            <section id="new" class="new-section">
-                <div class="container">
-                    <h2>Новиночки</h2>
-                    <div class="product-grid">
-                        <article class="product_class" id="ye-new">
-                            <div class="card-image"><img src="img/yeezy.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Yeezy Boosts</h3>
-                                <p>Размер - 41</p>
-                                <p>Цена - 23 000р.</p>
-                                <button class="add-to-cart" onclick="addToCart('ye-new')">Добавить в корзину.</button>
-                            </div>
-                        </article>
+        </div>
+    </header>
 
-                        <article class="product_class" id="am-new">
-                            <div class="card-image"><img src="img/airmax.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Nike Air Max 90</h3>
-                                <p>Размер - 42</p>
-                                <p>Цена - 13 990р.</p>
-                                <button class="add-to-cart" onclick="addToCart('am-new')">Добавить в корзину.</button>
-                            </div>
-                        </article>
+    <main>
+        <!-- Секция: НОВИНКИ -->
+        <section id="new">
+            <div class="container">
+                <h2>🔥 Новиночки</h2>
+                <!-- Сюда JS добавит товары с категорией 'new' -->
+                <div class="product-grid" id="container-new"></div>
+            </div>
+        </section>
 
-                        <article class="product_class" id="aj-new">
-                            <div class="card-image"><img src="img/jordan.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Nike Air Jordan 3</h3>
-                                <p>Размер - 40</p>
-                                <p>Цена - 11 100р.</p>
-                                <button class="add-to-cart" onclick="addToCart('aj-new')">Добавить в корзину.</button>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </section>
+        <!-- Секция: МУЖСКИЕ -->
+        <section id="male">
+            <div class="container">
+                <h2>Мужская коллекция</h2>
+                <!-- Сюда JS добавит товары с категорией 'male' -->
+                <div class="product-grid" id="container-male"></div>
+            </div>
+        </section>
 
-            <section id="male" class="male-section">
-                <div class="container">
-                    <h2>Мужские кроссовки</h2>
-                    <div class="product-grid">
-                        <article class="product_class" id="ye-male">
-                            <div class="card-image"><img src="img/yeezy.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Yeezy Boosts</h3>
-                                <p>Размер - 41</p>
-                                <p>Цена - 23 000р.</p>
-                                <button class="add-to-cart" onclick="addToCart('ye-male')">Добавить в корзину.</button>
-                            </div>
-                        </article>
+        <!-- Секция: ЖЕНСКИЕ -->
+        <section id="female">
+            <div class="container">
+                <h2>Женская коллекция</h2>
+                <!-- Сюда JS добавит товары с категорией 'female' -->
+                <div class="product-grid" id="container-female"></div>
+            </div>
+        </section>
+    </main>
 
-                        <article class="product_class" id="am-male">
-                            <div class="card-image"><img src="img/airmax.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Nike Air Max 90</h3>
-                                <p>Размер - 42</p>
-                                <p>Цена - 13 990р.</p>
-                                <button class="add-to-cart" onclick="addToCart('am-male')">Добавить в корзину.</button>
-                            </div>
-                        </article>
+    <footer>
+        <p>&copy; 2025 Sneakershop. Все права защищены.</p>
+    </footer>
 
-                        <article class="product_class" id="aj-male">
-                            <div class="card-image"><img src="img/jordan.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Nike Air Jordan 3</h3>
-                                <p>Размер - 40</p>
-                                <p>Цена - 11 100р.</p>
-                                <button class="add-to-cart" onclick="addToCart('aj-male')">Добавить в корзину.</button>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </section>
-
-            <section id="female" class="female-section">
-                <div class="container">
-                    <h2>Женсике кроссовки</h2>
-                    <div class="product-grid">
-                        <article class="product_class" id="ye-female">
-                            <div class="card-image"><img src="img/yeezy.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Yeezy Boosts</h3>
-                                <p>Размер - 41</p>
-                                <p>Цена - 23 000р.</p>
-                                <button class="add-to-cart" onclick="addToCart('ye-female')">Добавить в корзину.</button>
-                            </div>
-                        </article>
-
-                        <article class="product_class" id="am-female">
-                            <div class="card-image"><img src="img/airmax.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Nike Air Max 90</h3>
-                                <p>Размер - 42</p>
-                                <p>Цена - 13 990р.</p>
-                                <button class="add-to-cart" onclick="addToCart('am-female')">Добавить в корзину.</button>
-                            </div>
-                        </article>
-
-                        <article class="product_class" id="aj-female">
-                            <div class="card-image"><img src="img/jordan.jpeg" alt="">
-                                <span></span>
-                            </div>
-                            <div class="card-info">
-                                <h3>Nike Air Jordan 3</h3>
-                                <p>Размер - 40</p>
-                                <p>Цена - 11 100р.</p>
-                                <button class="add-to-cart" onclick="addToCart('aj-female')">Добавить в корзину.</button>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <footer>
-            <p>&copy; 2025 Sneakershop. Все права защищены.</p>
-        </footer>
-    </body>
+    <!-- Логика сайта -->
     <script src="main.js"></script>
-    </html>
+</body>
+</html>
