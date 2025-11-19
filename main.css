@@ -1,0 +1,84 @@
+:root {
+
+} 
+
+* {
+    box-sizing: border-box; /* Ensures padding doesn't break layout */
+}
+
+header {
+    /* 1. Фиксация */
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px; /* Твоя высота */
+    
+    /* 2. Важные настройки */
+    background-color: white; /* Обязательно! Иначе текст будет просвечивать */
+    z-index: 1000; /* Чтобы хэдер был ПОВЕРХ карточек товаров */
+    border-bottom: 1px solid #ccc;
+    
+    /* Выравнивание содержимого (твое старое) */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+/* 3. Компенсация (чтобы сайт не прятался под хэдер при загрузке) */
+body {
+    padding-top: 120px; /* Высота хэдера (100px) + 20px воздуха */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+/* 1. Сетка для карточек (Родитель) */
+.product-grid {
+    display: grid;
+    /* Магическая строка: минимум 250px, иначе перенос */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px; /* Ограничим ширину, чтобы на огромных экранах не разъезжалось */
+    margin: 0 auto;    /* Центрируем сетку */
+}
+
+/* 2. Сама карточка (Ребенок) */
+.product_class {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden; /* Чтобы картинка не вылезала за скругленные углы */
+    display: flex;
+    flex-direction: column; /* Чтобы контент шел столбиком */
+}
+
+/* 3. Картинка внутри карточки (Самое важное для тебя) */
+.card-image img {
+    width: 100%;
+    height: 200px;     /* Высота остается фиксированной, чтобы карточки были ровными */
+    object-fit: contain; /* ИЗМЕНИЛ ТУТ: Вместить картинку целиком */
+    display: block;
+}
+
+/* Отступы для текста внутри карточки */
+.card-info {
+    padding: 15px;
+}
+
+section {
+    /* Когда скроллим к секции, останавливаемся за 120px до неё */
+    scroll-margin-top: 120px; 
+    
+    /* Твои старые отступы */
+    padding: 40px 0; 
+}   

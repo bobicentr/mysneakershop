@@ -1,13 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
-    <script src="main.js"></script>
-    <title>Sneakershop</title>
-</head>
-<body>
-    
-</body>
-</html>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="main.css">
+        <script src="main.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <title>Sneakershop</title>
+    </head>
+    <body>
+        <header>
+            <h1>
+                <a href="/">SneakerShop</a>
+            </h1>
+            <ul class="nav-links">
+                <li><a href="#new">Новинки</a></li>
+                <li><a href="#male">Мужская обувь</a></li>
+                <li><a href="#female">Женская обувь</a></li>
+            </ul>
+            <form action="/search" role="search">
+                <label for="site-search" class="visually-hidden"></label>
+                <input type="serch" id="site-search" name="" placeholder="Найти модель">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+            <ul>
+                <p>Контакты</p>
+                <li>Номер: +7(ххх)ххх-хх-хх</li>
+                <li>Почта: example@example.com</li>
+            </ul>
+            <div>
+                <p>Моя корзина</p>
+                <button class="cart-btn" id="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+        <main>
+            <section id="new" class="new-section">
+                <div class="container">
+                    <h2>Новиночки</h2>
+                    <div class="product-grid">
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/yeezy.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Yeezy Boosts</h3>
+                                <p>Размер - 41</p>
+                                <p>Цена - 23 000р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/airmax.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Nike Air Max 90</h3>
+                                <p>Размер - 42</p>
+                                <p>Цена - 13 990р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/jordan.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Nike Air Jordan 3</h3>
+                                <p>Размер - 40</p>
+                                <p>Цена - 11 100р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section id="male" class="male-section">
+                <div class="container">
+                    <h2>Мужские кроссовки</h2>
+                    <div class="product-grid">
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/yeezy.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Yeezy Boosts</h3>
+                                <p>Размер - 41</p>
+                                <p>Цена - 23 000р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/airmax.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Nike Air Max 90</h3>
+                                <p>Размер - 42</p>
+                                <p>Цена - 13 990р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/jordan.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Nike Air Jordan 3</h3>
+                                <p>Размер - 40</p>
+                                <p>Цена - 11 100р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <section id="female" class="female-section">
+                <div class="container">
+                    <h2>Женсике кроссовки</h2>
+                    <div class="product-grid">
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/yeezy.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Yeezy Boosts</h3>
+                                <p>Размер - 41</p>
+                                <p>Цена - 23 000р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/airmax.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Nike Air Max 90</h3>
+                                <p>Размер - 42</p>
+                                <p>Цена - 13 990р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+
+                        <article class="product_class">
+                            <div class="card-image"><img src="img/jordan.jpeg" alt="">
+                                <span></span>
+                            </div>
+                            <div class="card-info">
+                                <h3>Nike Air Jordan 3</h3>
+                                <p>Размер - 40</p>
+                                <p>Цена - 11 100р.</p>
+                                <button class="add-to-cart">Добавить в корзину.</button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2024 Sneakershop. Все права защищены.</p>
+        </footer>
+    </body>
+    </html>
