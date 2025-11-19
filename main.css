@@ -82,3 +82,66 @@ section {
     /* Твои старые отступы */
     padding: 40px 0; 
 }   
+
+/* Делаем форму "опорной" точкой */
+.search-form {
+    position: relative; 
+    display: flex;
+    align-items: center;
+}
+
+/* Блок с результатами */
+.search-results {
+    position: absolute;
+    top: 100%; /* Сразу под формой */
+    left: 0;
+    width: 100%; /* Ширина как у поля ввода */
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 0 0 8px 8px; /* Скругляем только низ */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    z-index: 1001; /* Поверх всего */
+    max-height: 300px;
+    overflow-y: auto; /* Скролл, если результатов много */
+    display: none; /* Скрыт по умолчанию */
+}
+
+/* Одна строка результата (Превью) */
+.search-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s;
+}
+
+.search-item:last-child {
+    border-bottom: none;
+}
+
+.search-item:hover {
+    background-color: #f9f9f9;
+}
+
+/* Картинка в поиске */
+.search-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* Текст в поиске */
+.search-item-info h4 {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.search-item-info p {
+    margin: 0;
+    font-size: 0.75rem;
+    color: #888;
+}

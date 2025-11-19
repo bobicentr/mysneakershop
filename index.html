@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="main.css">
-        <script src="main.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <title>Sneakershop</title>
     </head>
@@ -18,10 +17,12 @@
                 <li><a href="#male">Мужская обувь</a></li>
                 <li><a href="#female">Женская обувь</a></li>
             </ul>
-            <form action="/search" role="search">
-                <label for="site-search" class="visually-hidden"></label>
-                <input type="serch" id="site-search" name="" placeholder="Найти модель">
-                <button type="submit"><i class="fas fa-search"></i></button>
+            <form action="#" role="search" class="search-form" onsubmit="return false;"> <!-- onsubmit отключает перезагрузку -->
+                <input type="search" id="site-search" placeholder="Найти модель..." autocomplete="off">
+                <button type="button"><i class="fas fa-search"></i></button>
+                
+                <!-- ВОТ ЭТОТ БЛОК БУДЕТ ВЫПАДАТЬ С РЕЗУЛЬТАТАМИ -->
+                <div id="search-results" class="search-results"></div>
             </form>
             <ul>
                 <p>Контакты</p>
@@ -41,7 +42,7 @@
                 <div class="container">
                     <h2>Новиночки</h2>
                     <div class="product-grid">
-                        <article class="product_class">
+                        <article class="product_class" id="ye-new">
                             <div class="card-image"><img src="img/yeezy.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -53,7 +54,7 @@
                             </div>
                         </article>
 
-                        <article class="product_class">
+                        <article class="product_class" id="am-new">
                             <div class="card-image"><img src="img/airmax.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -65,7 +66,7 @@
                             </div>
                         </article>
 
-                        <article class="product_class">
+                        <article class="product_class" id="aj-new">
                             <div class="card-image"><img src="img/jordan.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -84,7 +85,7 @@
                 <div class="container">
                     <h2>Мужские кроссовки</h2>
                     <div class="product-grid">
-                        <article class="product_class">
+                        <article class="product_class" id="ye-male">
                             <div class="card-image"><img src="img/yeezy.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -96,7 +97,7 @@
                             </div>
                         </article>
 
-                        <article class="product_class">
+                        <article class="product_class" id="am-male">
                             <div class="card-image"><img src="img/airmax.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -108,7 +109,7 @@
                             </div>
                         </article>
 
-                        <article class="product_class">
+                        <article class="product_class" id="aj-male">
                             <div class="card-image"><img src="img/jordan.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -127,7 +128,7 @@
                 <div class="container">
                     <h2>Женсике кроссовки</h2>
                     <div class="product-grid">
-                        <article class="product_class">
+                        <article class="product_class" id="ye-female">
                             <div class="card-image"><img src="img/yeezy.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -139,7 +140,7 @@
                             </div>
                         </article>
 
-                        <article class="product_class">
+                        <article class="product_class" id="am-female">
                             <div class="card-image"><img src="img/airmax.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -151,7 +152,7 @@
                             </div>
                         </article>
 
-                        <article class="product_class">
+                        <article class="product_class" id="aj-female">
                             <div class="card-image"><img src="img/jordan.jpeg" alt="">
                                 <span></span>
                             </div>
@@ -170,4 +171,5 @@
             <p>&copy; 2024 Sneakershop. Все права защищены.</p>
         </footer>
     </body>
+    <script src="main.js"></script>
     </html>
