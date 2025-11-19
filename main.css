@@ -383,3 +383,27 @@ footer {
     margin-top: 50px;
     border-top: 1px solid #eee;
 }
+
+/* --- ИСПРАВЛЕНИЕ КАРТИНОК В КОРЗИНЕ --- */
+
+.cart-item-row {
+    display: flex;
+    align-items: center;     /* Выравниваем всё по центру вертикально */
+    gap: 15px;               /* Отступ между картинкой и текстом */
+    padding: 10px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.cart-item-row img {
+    width: 60px;             /* Фиксированная ширина (небольшая) */
+    height: 60px;            /* Фиксированная высота */
+    object-fit: cover;       /* Обрезаем лишнее, чтобы был ровный квадрат */
+    /* Или используй object-fit: contain; если хочешь видеть кроссовок целиком, но с пустыми полями */
+    border-radius: 8px;      /* Скругленные углы */
+    border: 1px solid #eee;  /* Тонкая рамка для аккуратности */
+    background: #f9f9f9;     /* Светлый фон под картинкой */
+}
+
+.item-details {
+    flex-grow: 1;            /* Текст занимает всё свободное место */
+}

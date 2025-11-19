@@ -1,39 +1,47 @@
-// --- 1. НАСТРОЙКИ SUPABASE (Вставь свои данные!) ---
-const SUPABASE_URL = 'https://vebqimlusmxpdlrmwrlz.supabase.co';
+// --- 1. НАСТРОЙКИ SUPABASE ---
+// Вставь свои ключи сюда!
+const SUPABASE_URL = 'https://vebqimlusmxpdlrmwrlz.supabase.co/';
 const SUPABASE_KEY = 'sb_publishable_IGZOx-plKDsDczkYjZbv4Q_YEbXuYfq';
 
+// Используем имя sb, чтобы не было конфликтов с библиотекой
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// Глобальная переменная для хранения товаров
-let productsDB = [];
-// Корзина из памяти браузера
+// Глобальные переменные
+let productsDB = []; 
 let cart = JSON.parse(localStorage.getItem('sneaker-cart')) || [];
 
-// --- 2. ИНИЦИАЛИЗАЦИЯ САЙТА ---
+// --- 2. ИНИЦИАЛИЗАЦИЯ (ЗАГРУЗКА) ---
 async function initShop() {
     console.log("Загрузка товаров...");
 
-    // БЫЛО: const { data, error } = await supabase.from('products')...
-    
-    // СТАЛО:
     const { data, error } = await sb
         .from('products')
         .select('*');
 
-    // ... остальной код
-
-
     if (error) {
-        console.error("Ошибка загрузки:", error);
+        console.error("Ошибка Supabase:", error);
         return;
     }
 
-    // Сохраняем в переменную
     productsDB = data;
+    console.log("Товары получены:", productsDB);
     
-    // Рисуем товары и обновляем корзину
     renderProducts();
     updateCartUI();
+}
+
+// --- ВСПОМОГАТЕЛЬНАЯ ФУНКЦИЯ ДЛЯ ЦЕНЫ ---
+// Она решает твою проблему с ошибкой
+function getPrice(price) {
+    // Если цена уже число (например, 23000) — просто возвращаем его
+    if (typeof price === 'number') {
+        return price;
+    }
+    // Если цена строка (например, "23 000р.") — чистим от букв и пробелов
+    if (typeof price === 'string') {
+        return parseInt(price.replace(/\D/g, '')) || 0;
+    }
+    return 0;
 }
 
 // --- 3. ОТРИСОВКА ТОВАРОВ (RENDER) ---
@@ -42,40 +50,43 @@ function renderProducts() {
     const containerMale = document.getElementById('container-male');
     const containerFemale = document.getElementById('container-female');
 
-    // Очищаем контейнеры перед отрисовкой (чтобы не дублировалось при перезагрузке)
+    // Очистка
     if(containerNew) containerNew.innerHTML = '';
     if(containerMale) containerMale.innerHTML = '';
     if(containerFemale) containerFemale.innerHTML = '';
 
-    // Шаблон карточки
-    const createCard = (product) => `
+    const createCard = (product) => {
+        // Форматируем цену для красоты (добавляем пробелы, например 23 000)
+        const displayPrice = getPrice(product.price).toLocaleString() + ' ₽';
+
+        return `
         <article class="product_class" id="${product.html_id}">
             <div class="card-image">
                 <img src="${product.img}" alt="${product.name}" loading="lazy">
             </div>
             <div class="card-info">
                 <h3>${product.name}</h3>
-                <p>Цена: ${product.price}</p>
+                <p>Цена: ${displayPrice}</p>
                 <button class="add-to-cart" onclick="addToCart('${product.html_id}')">
-                    В корзину
+                    В КОРЗИНУ
                 </button>
             </div>
         </article>
-    `;
+        `;
+    };
 
     productsDB.forEach(product => {
-        // 1. Проверка на новизну
+        // Проверяем статус (Новинки)
         if (product.status === 'new' && containerNew) {
             containerNew.innerHTML += createCard(product);
         }
-    
-        // 2. Проверка на мужские (БЕЗ else!)
-        // Добавим .toLowerCase(), чтобы работало и с 'Male', и с 'male'
+
+        // Проверяем пол (Мужские) - приводим к нижнему регистру на всякий случай
         if (product.sex && product.sex.toLowerCase() === 'male' && containerMale) {
             containerMale.innerHTML += createCard(product);
         }
-    
-        // 3. Проверка на женские (БЕЗ else!)
+
+        // Проверяем пол (Женские)
         if (product.sex && product.sex.toLowerCase() === 'female' && containerFemale) {
             containerFemale.innerHTML += createCard(product);
         }
@@ -83,10 +94,7 @@ function renderProducts() {
 }
 
 // --- 4. ЛОГИКА КОРЗИНЫ ---
-
-// Добавление товара
 function addToCart(id) {
-    // Ищем товар в скачанной базе по html_id
     const product = productsDB.find(p => p.html_id === id);
     if (!product) return;
 
@@ -95,7 +103,6 @@ function addToCart(id) {
     if (itemInCart) {
         itemInCart.count++;
     } else {
-        // Добавляем, копируя поля
         cart.push({ ...product, count: 1 });
     }
 
@@ -103,9 +110,8 @@ function addToCart(id) {
     updateCartUI();
 }
 
-// Удаление товара
 function removeFromCart(id, event) {
-    if (event) event.stopPropagation(); // Чтобы окно не закрывалось
+    if (event) event.stopPropagation();
 
     const item = cart.find(p => p.html_id === id);
     if (!item) return;
@@ -120,12 +126,10 @@ function removeFromCart(id, event) {
     updateCartUI();
 }
 
-// Сохранение в память
 function saveCart() {
     localStorage.setItem('sneaker-cart', JSON.stringify(cart));
 }
 
-// Обновление интерфейса корзины
 function updateCartUI() {
     const countEl = document.getElementById('cart-count');
     const itemsContainer = document.querySelector('.cart-items');
@@ -139,9 +143,12 @@ function updateCartUI() {
     cart.forEach(item => {
         totalCount += item.count;
         
-        // Чистим цену от "р." и пробелов для математики
-        const priceVal = parseInt(item.price.replace(/\D/g, '')) || 0;
+        // ИСПОЛЬЗУЕМ БЕЗОПАСНУЮ ФУНКЦИЮ ПОЛУЧЕНИЯ ЦЕНЫ
+        const priceVal = getPrice(item.price);
         totalPrice += priceVal * item.count;
+
+        // Красивая цена для отображения
+        const displayPrice = priceVal.toLocaleString() + ' ₽';
 
         const div = document.createElement('div');
         div.className = 'cart-item-row';
@@ -149,78 +156,92 @@ function updateCartUI() {
             <img src="${item.img}" alt="${item.name}">
             <div class="item-details">
                 <h4>${item.name}</h4>
-                <p>${item.count} шт.</p>
+                <p>${item.count} шт. x ${displayPrice}</p>
             </div>
             <button class="remove-btn" onclick="removeFromCart('${item.html_id}', event)">&times;</button>
         `;
         itemsContainer.appendChild(div);
     });
 
-    countEl.innerText = totalCount;
-    totalEl.innerText = totalPrice.toLocaleString() + ' руб.';
+    // Обновляем общие цифры
+    if (countEl) countEl.innerText = totalCount;
+    if (totalEl) totalEl.innerText = totalPrice.toLocaleString() + ' ₽';
+    
+    // Если пусто
+    if (cart.length === 0) {
+        itemsContainer.innerHTML = '<div style="padding:20px; text-align:center; color:#999;">Корзина пуста</div>';
+    }
 }
 
-// Открытие/Закрытие корзины
+// Управление окном корзины
 const cartBtn = document.getElementById('cart-btn');
 const cartWindow = document.getElementById('cart-window');
 
-cartBtn.addEventListener('click', () => cartWindow.classList.toggle('active'));
-
-window.addEventListener('click', (e) => {
-    if (!cartWindow.contains(e.target) && !cartBtn.contains(e.target)) {
-        cartWindow.classList.remove('active');
-    }
-});
+if (cartBtn && cartWindow) {
+    cartBtn.addEventListener('click', () => cartWindow.classList.toggle('active'));
+    window.addEventListener('click', (e) => {
+        if (!cartWindow.contains(e.target) && !cartBtn.contains(e.target)) {
+            cartWindow.classList.remove('active');
+        }
+    });
+}
 
 
 // --- 5. ПОИСК (Живой) ---
 const searchInput = document.getElementById('site-search');
 const resultsContainer = document.getElementById('search-results');
 
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase().trim();
-    resultsContainer.innerHTML = '';
+if (searchInput && resultsContainer) {
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase().trim();
+        resultsContainer.innerHTML = '';
 
-    if (query.length === 0) {
-        resultsContainer.style.display = 'none';
-        return;
-    }
+        if (query.length === 0) {
+            resultsContainer.style.display = 'none';
+            return;
+        }
 
-    // Фильтруем локальную копию базы
-    const found = productsDB.filter(p => p.name.toLowerCase().includes(query));
+        const found = productsDB.filter(p => p.name.toLowerCase().includes(query));
 
-    if (found.length > 0) {
-        resultsContainer.style.display = 'block';
-        found.forEach(product => {
-            const item = document.createElement('div');
-            item.className = 'search-item';
-            item.innerHTML = `
-                <img src="${product.img}" alt="${product.name}">
-                <div class="search-item-info">
-                    <h4>${product.name}</h4>
-                    <p>${product.price}</p>
-                </div>
-            `;
-            
-            // Клик по результату
-            item.addEventListener('click', () => {
-                const card = document.getElementById(product.html_id);
-                if (card) {
-                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    card.style.transform = "scale(1.05)";
-                    setTimeout(() => card.style.transform = "none", 1000);
-                }
-                resultsContainer.style.display = 'none';
-                searchInput.value = '';
+        if (found.length > 0) {
+            resultsContainer.style.display = 'block';
+            found.forEach(product => {
+                const priceVal = getPrice(product.price).toLocaleString() + ' ₽';
+                
+                const item = document.createElement('div');
+                item.className = 'search-item';
+                item.innerHTML = `
+                    <img src="${product.img}" alt="${product.name}">
+                    <div class="search-item-info">
+                        <h4>${product.name}</h4>
+                        <p>${priceVal}</p>
+                    </div>
+                `;
+                
+                item.addEventListener('click', () => {
+                    const card = document.getElementById(product.html_id);
+                    if (card) {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        card.style.transition = "0.3s";
+                        card.style.transform = "scale(1.05)";
+                        card.style.boxShadow = "0 0 20px rgba(79, 70, 229, 0.4)";
+                        setTimeout(() => {
+                            card.style.transform = "none";
+                            card.style.boxShadow = "none";
+                        }, 1500);
+                    }
+                    resultsContainer.style.display = 'none';
+                    searchInput.value = '';
+                });
+                
+                resultsContainer.appendChild(item);
             });
-            
-            resultsContainer.appendChild(item);
-        });
-    } else {
-        resultsContainer.style.display = 'block';
-        resultsContainer.innerHTML = '<div class="search-item">Ничего не найдено</div>';
-    }
-});
+        } else {
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = '<div class="search-item">Ничего не найдено</div>';
+        }
+    });
+}
 
 // ЗАПУСК
 initShop();
