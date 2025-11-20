@@ -407,3 +407,91 @@ footer {
 .item-details {
     flex-grow: 1;            /* Текст занимает всё свободное место */
 }
+
+button:disabled {
+    background-color: #333 !important; /* Темно-серый фон */
+    color: #777 !important;            /* Тусклый текст */
+    cursor: not-allowed;               /* Курсор "знак стоп" */
+    opacity: 0.7;                      /* Немного прозрачности */
+    transform: none !important;        /* Убираем анимацию нажатия/ховера */
+    box-shadow: none !important;       /* Убираем тень */
+}
+
+/* --- СТИЛИ ДЛЯ CHECKOUT.HTML --- */
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 350px; /* Форма широкая, итог узкий */
+    gap: 40px;
+    margin-top: 30px;
+}
+
+/* Если экран маленький - в одну колонку */
+@media (max-width: 768px) {
+    .checkout-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.checkout-summary {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    height: fit-content; /* Высота по содержимому */
+}
+
+.checkout-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #eee;
+}
+
+.confirm-btn {
+    background: var(--primary); /* Черный */
+    color: white;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.confirm-btn:hover {
+    background: var(--accent); /* Синий при наведении */
+}
