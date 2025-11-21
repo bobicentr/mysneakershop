@@ -231,6 +231,70 @@ if (searchInput && resultsContainer) {
     });
 }
 
+// Ждем загрузки страницы
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Инициализация карты
+    // setView([широта, долгота], масштаб) - ставим центр на Москву
+    const map = L.map('map').setView([55.7558, 37.6173], 10);
+
+    // 2. Добавляем слой "плиток" (сама картинка карты)
+    // Используем бесплатный сервер OSM
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors' // Это требование лицензии (копирайт)
+    }).addTo(map);
+
+    let marker = null; // Переменная для хранения маркера
+
+    // 3. Обработка клика по карте
+    map.on('click', async function(e) {
+        const { lat, lng } = e.latlng; // Получаем координаты клика
+
+        // Если маркер уже есть - двигаем его, если нет - создаем
+        if (marker) {
+            marker.setLatLng([lat, lng]);
+        } else {
+            marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+            
+            // Если перетащили маркер - тоже ищем адрес
+            marker.on('dragend', function(event) {
+                const position = marker.getLatLng();
+                getAddress(position.lat, position.lng);
+            });
+        }
+
+        // Вызываем функцию получения адреса
+        await getAddress(lat, lng);
+    });
+
+    // 4. Функция обратного геокодирования (Координаты -> Адрес)
+    async function getAddress(lat, lng) {
+        const input = document.getElementById('address-input');
+        input.value = "Поиск адреса...";
+
+        try {
+            // Делаем запрос к бесплатному API Nominatim
+            // accept-language=ru делает ответ на русском
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=ru`);
+            
+            if (!response.ok) throw new Error('Ошибка сети');
+            
+            const data = await response.json();
+            
+            // Формируем красивую строку. Nominatim возвращает много полей (road, house_number, city...)
+            // display_name - это полная строка адреса
+            const address = data.display_name;
+
+            // Записываем в инпут
+            input.value = address;
+            
+        } catch (error) {
+            console.error(error);
+            input.value = "Не удалось определить адрес";
+        }
+    }
+});
+
 // === ГЛАВНЫЙ ЗАПУСК ===
 // 1. Сразу пытаемся отрисовать страницу оформления (данные берем из localStorage, ждать базу не нужно)
 renderCheckoutPage();

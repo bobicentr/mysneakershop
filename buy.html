@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="main.css"> <!-- Тот же стиль -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- CSS для карты -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+<!-- JS самой библиотеки -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
 
@@ -38,8 +43,12 @@
                         </div>
                         <div class="form-group">
                             <label>Адрес доставки</label>
-                            <input type="text" placeholder="Город, улица, дом, квартира" required>
+                            <!-- Убираем подсказки Яндекса, оставляем обычный инпут -->
+                            <input type="text" id="address-input" placeholder="Выберите точку на карте..." required>
                         </div>
+
+                        <!-- Блок карты -->
+                        <div id="map" class="map-container"></div>
                         <button type="submit" class="confirm-btn">Подтвердить заказ</button>
                     </form>
                 </div>

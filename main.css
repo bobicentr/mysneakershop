@@ -495,3 +495,12 @@ button:disabled {
 .confirm-btn:hover {
     background: var(--accent); /* Синий при наведении */
 }
+
+/* Без высоты карта не покажется! */
+#map, .map-container {
+    width: 100%;
+    height: 400px; /* Обязательно задай высоту в пикселях */
+    background-color: #eee; /* Серый фон, чтобы видеть блок, пока карта грузится */
+    margin-top: 20px;
+    border-radius: 8px;
+}
