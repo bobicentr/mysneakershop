@@ -1,13 +1,12 @@
-/* --- 1. ПЕРЕМЕННЫЕ И БАЗА --- */
 :root {
-    --primary: #000000;       /* Основной цвет текста */
-    --accent: #4f46e5;        /* Яркий акцент (Индиго) */
-    --accent-hover: #4338ca;  /* Акцент при наведении */
-    --bg-body: #f3f4f6;       /* Чуть сероватый фон сайта (чтобы белые карточки выделялись) */
+    --primary: #000000;      
+    --accent: #4f46e5;      
+    --accent-hover: #4338ca; 
+    --bg-body: #f3f4f6;      
     --bg-card: #ffffff;
     --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-    --radius: 16px;           /* Скругление углов */
+    --radius: 16px;          
 }
 
 * {
@@ -17,10 +16,10 @@
 }
 
 body {
-    font-family: 'Montserrat', sans-serif; /* Модный шрифт */
+    font-family: 'Montserrat', sans-serif; 
     background-color: var(--bg-body);
     color: var(--primary);
-    padding-top: 120px; /* Место под хэдер */
+    padding-top: 120px; 
     line-height: 1.6;
 }
 
@@ -33,15 +32,13 @@ ul {
     list-style: none;
 }
 
-/* --- 2. СТИЛЬНЫЙ ХЭДЕР (GLASSMORPHISM) --- */
 header {
     position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100px;
-    
-    /* Эффект матового стекла */
+
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -52,10 +49,9 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 40px; /* Больше воздуха по бокам */
+    padding: 0 40px;
 }
 
-/* Логотип */
 header h1 a {
     font-weight: 800;
     font-size: 1.8rem;
@@ -66,7 +62,7 @@ header h1 a {
     -webkit-text-fill-color: transparent;
 }
 
-/* Меню навигации */
+
 .nav-links {
     display: flex;
     gap: 30px;
@@ -84,7 +80,6 @@ header h1 a {
     color: var(--accent);
 }
 
-/* Подчеркивание при наведении */
 .nav-links li a::after {
     content: '';
     position: absolute;
@@ -100,20 +95,20 @@ header h1 a {
     width: 100%;
 }
 
-/* --- 3. ПОИСК --- */
+
 .search-form {
     position: relative; 
     display: flex;
     align-items: center;
     background: #f1f1f1;
-    border-radius: 50px; /* Овальная форма */
+    border-radius: 50px;
     padding: 5px 15px;
     width: 250px;
     transition: box-shadow 0.3s;
 }
 
 .search-form:focus-within {
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2); /* Обводка при клике */
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
     background: white;
 }
 
@@ -133,15 +128,12 @@ header h1 a {
     color: #666;
 }
 
-/* Скрываем лишние контакты в хэдере для чистоты (опционально) 
-   или стилизуем их мелко */
+
 header > ul:nth-of-type(2) {
-    display: none; /* Молодежь не звонит, они пишут в чат. Скрываем для стиля */
+    display: none; 
 }
-/* Если хочешь оставить контакты, убери display: none выше */
 
 
-/* --- 4. СЕКЦИИ И ЗАГОЛОВКИ --- */
 section {
     scroll-margin-top: 120px; 
     padding: 60px 0; 
@@ -149,7 +141,7 @@ section {
 
 .container {
     width: 90%;
-    max-width: 1400px; /* Широкий экран */
+    max-width: 1400px; 
     margin: 0 auto;
 }
 
@@ -161,36 +153,32 @@ h2 {
     display: inline-block;
 }
 
-/* Декоративная точка после заголовка */
 h2::after {
     content: '.';
     color: var(--accent);
 }
 
 
-/* --- 5. СЕТКА ТОВАРОВ --- */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Чуть шире карточки */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
     gap: 30px;
     width: 100%;
 }
 
-/* --- 6. КАРТОЧКА ТОВАРА (ГЛАВНОЕ ИЗМЕНЕНИЕ) --- */
 .product_class {
     background: var(--bg-card);
-    border: none; /* Убираем старую рамку */
+    border: none; 
     border-radius: var(--radius);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: var(--shadow); /* Мягкая тень */
+    box-shadow: var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     position: relative;
 }
 
-/* Эффект "Подпрыгивания" при наведении */
 .product_class:hover {
     transform: translateY(-10px);
     box-shadow: var(--shadow-hover);
@@ -198,7 +186,7 @@ h2::after {
 
 .card-image {
     padding: 20px;
-    background: #f9fafb; /* Светлая подложка под кроссовок */
+    background: #f9fafb;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -210,11 +198,11 @@ h2::after {
     object-fit: contain;
     display: block;
     transition: transform 0.3s;
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); /* Тень под самим кроссовком */
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
 }
 
 .product_class:hover .card-image img {
-    transform: scale(1.05) rotate(-3deg); /* Кроссовок чуть поворачивается */
+    transform: scale(1.05) rotate(-3deg); 
 }
 
 .card-info {
@@ -236,17 +224,14 @@ h2::after {
     margin-bottom: 5px;
 }
 
-/* Цена жирнее */
 .card-info p:nth-of-type(2) {
     color: var(--primary);
     font-weight: 700;
     font-size: 1.2rem;
-    margin-top: auto; /* Прижимаем к низу перед кнопкой */
+    margin-top: auto; 
     margin-bottom: 15px;
 }
 
-
-/* --- 7. КНОПКА "В КОРЗИНУ" --- */
 .add-to-cart {
     background-color: var(--primary);
     color: white;
@@ -272,9 +257,6 @@ h2::after {
     transform: scale(0.98);
 }
 
-
-/* --- 8. КОРЗИНА И ПОИСК (ВЫПАДАЮЩИЕ СПИСКИ) --- */
-/* Корзина в хэдере */
 .cart-btn {
     background: none;
     border: none;
@@ -303,7 +285,7 @@ h2::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid white; /* Белая обводка чтобы отделить от иконки */
+    border: 2px solid white; 
 }
 
 /* Окно корзины */
@@ -328,7 +310,6 @@ h2::after {
 .cart-header h3 { font-size: 1.2rem; margin-bottom: 5px; }
 .cart-total { color: var(--accent); font-weight: 800; font-size: 1.1rem; }
 
-/* Кнопка оформить */
 .checkout-btn {
     width: 100%;
     background: var(--primary);
@@ -343,7 +324,6 @@ h2::after {
 }
 .checkout-btn:hover { background: var(--accent); }
 
-/* Результаты поиска */
 .search-results {
     position: absolute;
     top: 110%;
@@ -374,7 +354,6 @@ h2::after {
 .search-item:hover { background-color: #f3f4f6; }
 .search-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; }
 
-/* --- ФУТЕР --- */
 footer {
     text-align: center;
     padding: 40px;
